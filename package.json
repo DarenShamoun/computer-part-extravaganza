@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NEXT_PUBLIC_BASE_PATH='/computer-part-extravaganza' next build",
+    "export": "NEXT_PUBLIC_BASE_PATH='/computer-part-extravaganza' next export",
     "start": "next start",
     "lint": "next lint"
   },
