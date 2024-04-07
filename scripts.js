@@ -36,22 +36,26 @@ let computerPartData = {
 // This will load the data from the various JSON files
 function loadData() {
     const categories = Object.keys(computerPartData);
-    categories.forEach(category => {
-        fetch(`computer_part_data/${category}_UserBenchmarks.json`)
-        .then(response => response.json())
-        .then(data => {
-            computerPartData[category] = data;
-            console.log(`Loaded ${data.length} items for ${category}`);
-        })
-        .catch(error => console.error(`Error loading data for ${category}:`, error));
+    let promises = categories.map(category => {
+        return fetch(`computer_part_data/${category}_UserBenchmarks.json`)
+            .then(response => response.json())
+            .then(data => {
+                computerPartData[category] = data;
+                console.log(`Loaded ${data.length} items for ${category}`);
+            });
     });
-} 
+
+    Promise.all(promises).then(() => {
+        console.log('All data loaded');
+        showHome(); // Call showHome here to ensure it executes after data is loaded
+    }).catch(error => console.error('Error loading some data:', error));
+}
 
 // This function adds cards the page to display the data in the array
 function showCards(data) {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = ""; // Clear the existing items in the container
-    
+
     data.forEach(item => {
         const card = document.createElement("div");
         card.className = "card";
@@ -60,29 +64,33 @@ function showCards(data) {
         cardContent.className = "card-content";
 
         const cardHeader = document.createElement("h2");
-        cardHeader.textContent = `${item.brand || "N/A"} ${item.model || "N/A"}`;
+        cardHeader.textContent = `${item.Brand} ${item.Model}`; // Use 'Brand' and 'Model'
 
         const detailsList = document.createElement("ul");
 
         const partNumber = document.createElement("li");
-        partNumber.textContent = `Part Number: ${item.partNumber || "N/A"}`;
+        partNumber.textContent = `Part Number: ${item['Part Number'] || "N/A"}`; // Use 'Part Number'
 
         const rank = document.createElement("li");
-        rank.textContent = `Rank: ${item.rank || "N/A"}`;
+        rank.textContent = `Rank: ${item.Rank || "N/A"}`; // Use 'Rank'
 
         const benchmark = document.createElement("li");
-        benchmark.textContent = `Benchmark: ${item.benchmark || "N/A"}`;
+        benchmark.textContent = `Benchmark: ${item.Benchmark || "N/A"}`; // Use 'Benchmark'
 
         const samples = document.createElement("li");
-        samples.textContent = `Samples: ${item.samples || "N/A"}`;
+        samples.textContent = `Samples: ${item.Samples || "N/A"}`; // Use 'Samples'
 
         const url = document.createElement("li");
-        url.textContent = `URL: ${item.url || "N/A"}`;
+        const urlLink = document.createElement("a");
+        urlLink.href = item.URL; // Use 'URL'
+        urlLink.textContent = item.URL || "N/A";
+        urlLink.target = "_blank"; // Open the link in a new tab
+        url.appendChild(urlLink);
 
-        detailsList.appendChild(partNumber);
         detailsList.appendChild(rank);
         detailsList.appendChild(benchmark);
         detailsList.appendChild(samples);
+        detailsList.appendChild(partNumber);
         detailsList.appendChild(url);
 
         cardContent.appendChild(cardHeader);
@@ -94,24 +102,22 @@ function showCards(data) {
     });
 }
 
-function editCardContent(card, newTitle, newImageURL) {
-    card.style.display = "block";
-
-    const cardHeader = card.querySelector("h2");
-    cardHeader.textContent = newTitle;
-
-    const cardImage = card.querySelector("img");
-    cardImage.src = newImageURL;
-    cardImage.alt = newTitle + " Poster";
-
-    // You can use console.log to help you debug!
-    // View the output by right clicking on your website,
-    // select "Inspect", then click on the "Console" tab
-    console.log("new card:", newTitle, "- html: ", card);
+// This function will display the data for the home page
+function showHome() {
+    let homeData = [];
+    Object.keys(computerPartData).forEach(category => {
+        if (computerPartData[category].length > 0) {
+            //push the item object into the homeData array
+            homeData.push(computerPartData[category][0]);
+        }
+    });
+    showCards(homeData);
 }
 
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+// This calls the loadData() function when the page is first loaded
+document.addEventListener("DOMContentLoaded", function() {
+    loadData();
+});
 
 function quoteAlert() {
     console.log("Button Clicked!")
