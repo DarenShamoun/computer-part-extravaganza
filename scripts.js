@@ -23,20 +23,29 @@
  * 
  */
 
+// This is an array of various PC parts
+let computerPartData = {
+    "CPU": [],
+    "GPU": [],
+    "HDD": [],
+    "RAM": [],
+    "SSD": [],
+    "USB": []
+};
 
-const FRESH_PRINCE_URL = "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL = "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL = "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// This is an array of strings (TV show titles)
-let titles = [
-    "Fresh Prince of Bel Air",
-    "Curb Your Enthusiasm",
-    "East Los High"
-];
-// Your final submission should have much more data than this, and 
-// you should use more than just an array of strings to store it all.
-
+// This will load the data from the various JSON files
+function loadData() {
+    const categories = Object.keys(computerPartData);
+    categories.forEach(category => {
+        fetch(`computer_part_data/${category}_UserBenchmarks.json`)
+        .then(response => response.json())
+        .then(data => {
+            computerPartData[category] = data;
+            console.log(`Loaded ${data.length} items for ${category}`);
+        })
+        .catch(error => console.error(`Error loading data for ${category}:`, error));
+    });
+} 
 
 // This function adds cards the page to display the data in the array
 function showCards() {
