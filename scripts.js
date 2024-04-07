@@ -48,29 +48,50 @@ function loadData() {
 } 
 
 // This function adds cards the page to display the data in the array
-function showCards() {
+function showCards(data) {
     const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML = "";
-    const templateCard = document.querySelector(".card");
+    cardContainer.innerHTML = ""; // Clear the existing items in the container
     
-    for (let i = 0; i < titles.length; i++) {
-        let title = titles[i];
+    data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
 
-        // This part of the code doesn't scale very well! After you add your
-        // own data, you'll need to do something totally different here.
-        let imageURL = "";
-        if (i == 0) {
-            imageURL = FRESH_PRINCE_URL;
-        } else if (i == 1) {
-            imageURL = CURB_POSTER_URL;
-        } else if (i == 2) {
-            imageURL = EAST_LOS_HIGH_POSTER_URL;
-        }
+        const cardContent = document.createElement("div");
+        cardContent.className = "card-content";
 
-        const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL); // Edit title and image
-        cardContainer.appendChild(nextCard); // Add new card to the container
-    }
+        const cardHeader = document.createElement("h2");
+        cardHeader.textContent = `${item.brand || "N/A"} ${item.model || "N/A"}`;
+
+        const detailsList = document.createElement("ul");
+
+        const partNumber = document.createElement("li");
+        partNumber.textContent = `Part Number: ${item.partNumber || "N/A"}`;
+
+        const rank = document.createElement("li");
+        rank.textContent = `Rank: ${item.rank || "N/A"}`;
+
+        const benchmark = document.createElement("li");
+        benchmark.textContent = `Benchmark: ${item.benchmark || "N/A"}`;
+
+        const samples = document.createElement("li");
+        samples.textContent = `Samples: ${item.samples || "N/A"}`;
+
+        const url = document.createElement("li");
+        url.textContent = `URL: ${item.url || "N/A"}`;
+
+        detailsList.appendChild(partNumber);
+        detailsList.appendChild(rank);
+        detailsList.appendChild(benchmark);
+        detailsList.appendChild(samples);
+        detailsList.appendChild(url);
+
+        cardContent.appendChild(cardHeader);
+        cardContent.appendChild(detailsList);
+
+        card.appendChild(cardContent);
+
+        cardContainer.appendChild(card);
+    });
 }
 
 function editCardContent(card, newTitle, newImageURL) {
