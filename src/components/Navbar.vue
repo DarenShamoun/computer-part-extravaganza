@@ -1,21 +1,37 @@
 <template>
-  <v-app-bar app scroll-behavior="elevate" >
-    <v-app-bar-title>Top of the Line PC Parts</v-app-bar-title>
+  <v-app-bar app scroll-behavior="elevate">
+    <router-link to="/" class="title-link">
+      <v-app-bar-title>Top of the Line PC Parts</v-app-bar-title>
+    </router-link>
     <v-spacer></v-spacer>
-    <v-btn text href="#">GPU</v-btn>
-    <v-btn text href="#">CPU</v-btn>
-    <v-btn text href="#">RAM</v-btn>
-    <v-btn text href="#">SSD</v-btn>
-    <v-btn text href="#">HDD</v-btn>
-    <v-btn text href="#">USB</v-btn>
+    <router-link to="/gpu" class="nav-link">
+      <v-btn text>GPU</v-btn>
+    </router-link>
+    <router-link to="/cpu" class="nav-link">
+      <v-btn text>CPU</v-btn>
+    </router-link>
+    <router-link to="/ram" class="nav-link">
+      <v-btn text>RAM</v-btn>
+    </router-link>
+    <router-link to="/ssd" class="nav-link">
+      <v-btn text>SSD</v-btn>
+    </router-link>
+    <router-link to="/hdd" class="nav-link">
+      <v-btn text>HDD</v-btn>
+    </router-link>
+    <router-link to="/usb" class="nav-link">
+      <v-btn text>USB</v-btn>
+    </router-link>
   </v-app-bar>
 </template>
 
 <style scoped>
-  .v-app-bar {
-  background: linear-gradient(90deg, rgb(91, 118, 238) 0%, rgb(192, 197, 221) 100%);
+  .title-link {
+    color: #FFF;
+    padding-left: 20px;
+    text-decoration: none;
+  }
+  .nav-link > .v-btn {
+    color: #FFF;
   }
 </style>
-  
-<script setup>
-</script>

@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import router from './router';
 
 // Pinia storeage
 import { createPinia } from 'pinia'
@@ -35,4 +36,4 @@ const vuetify = createVuetify({ // Create a Vuetify instance
 
 const pinia = createPinia(); // Create a Pinia instance
 
-createApp(App).use(vuetify).use(pinia).mount('#app') // Mount the app to the #app div in index.html
+createApp(App).use(vuetify).use(router).use(pinia).mount('#app') // Mount the app to the #app div in index.html
