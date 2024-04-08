@@ -3,21 +3,12 @@
       <v-app-bar app scroll-behavior="elevate" >
         <v-app-bar-title>Top of the Line PC Parts</v-app-bar-title>
         <v-spacer></v-spacer>
-        <v-btn text href="#">GPUs</v-btn>
-        <v-btn text href="#">CPUs</v-btn>
+        <v-btn text href="#">GPU</v-btn>
+        <v-btn text href="#">CPU</v-btn>
         <v-btn text href="#">RAM</v-btn>
-        <v-btn text href="#">SSDs</v-btn>
-        <v-btn text href="#">HDDs</v-btn>
-        <v-btn text href="#">USBs</v-btn>
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on">Custom Configurations</v-btn>
-          </template>
-          <v-list>
-            <v-list-item link href="#">Rank 1 Build</v-list-item>
-            <v-list-item link href="#">My Current PC</v-list-item>
-          </v-list>
-        </v-menu>
+        <v-btn text href="#">SSD</v-btn>
+        <v-btn text href="#">HDD</v-btn>
+        <v-btn text href="#">USB</v-btn>
       </v-app-bar>
     </v-app>
 </template>
