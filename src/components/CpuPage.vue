@@ -24,9 +24,9 @@
             height="200px"
             contain
           ></v-img>
-          <v-card-subtitle>Benchmark: {{ cpu.Benchmark }}</v-card-subtitle>
+          <v-card-subtitle>Rank: {{ cpu.Rank }}</v-card-subtitle>
           <v-card-text>
-            Rank: {{ cpu.Rank }}
+            Benchmark: {{ cpu.Benchmark }}
           </v-card-text>
           <v-card-actions>
             <v-btn :href="cpu.URL" target="_blank" text>More Info</v-btn>
