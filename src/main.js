@@ -1,14 +1,17 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 
-// Vuetify
+// Pinia storeage
+import { createPinia } from 'pinia'
+
+// Vuetify theming
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as colors from 'vuetify/lib/util/colors';
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-const vuetify = createVuetify({
+const vuetify = createVuetify({ // Create a Vuetify instance
   components,
   directives,
   theme: {
@@ -30,4 +33,6 @@ const vuetify = createVuetify({
   },
 })
 
-createApp(App).use(vuetify).mount('#app')
+const pinia = createPinia(); // Create a Pinia instance
+
+createApp(App).use(vuetify).use(pinia).mount('#app') // Mount the app to the #app div in index.html
