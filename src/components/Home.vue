@@ -1,3 +1,22 @@
+<script setup>
+  import { computed } from 'vue';
+  import { usePartsStore } from '../store/partsStore.js';
+  
+  const partsStore = usePartsStore();
+  
+  // Computed property to extract the top-rated part from each category
+  const topParts = computed(() => {
+    return [
+      { category: 'cpu', item: partsStore.cpu[0] },
+      { category: 'gpu', item: partsStore.gpu[0] },
+      { category: 'hdd', item: partsStore.hdd[0] },
+      { category: 'ram', item: partsStore.ram[0] },
+      { category: 'ssd', item: partsStore.ssd[0] },
+      { category: 'usb', item: partsStore.usb[0] },
+    ];
+  });
+</script>
+
 <template>
     <v-container>
       <v-row>
@@ -27,23 +46,3 @@
       </v-row>
     </v-container>
 </template>
-  
-<script setup>
-  import { computed } from 'vue';
-  import { usePartsStore } from '../store/partsStore.js';
-  
-  const partsStore = usePartsStore();
-  
-  // Computed property to extract the top-rated part from each category
-  const topParts = computed(() => {
-    return [
-      { category: 'cpu', item: partsStore.cpu[0] },
-      { category: 'gpu', item: partsStore.gpu[0] },
-      { category: 'hdd', item: partsStore.hdd[0] },
-      { category: 'ram', item: partsStore.ram[0] },
-      { category: 'ssd', item: partsStore.ssd[0] },
-      { category: 'usb', item: partsStore.usb[0] },
-    ];
-  });
-</script>
-  
