@@ -40,39 +40,39 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { usePartsStore } from '../store/partsStore';
+  import { computed } from 'vue';
+  import { usePartsStore } from '../store/partsStore';
 
-const partsStore = usePartsStore();
-const usbs = computed(() => partsStore.usb);
+  const partsStore = usePartsStore();
+  const usbs = computed(() => partsStore.usb);
 </script>
 
 <style scoped>
-.card {
-  max-width: 400px;
-}
-.title {
-  font-size: 1.1rem; 
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-.v-img {
-  position: relative;
-}
-.v-card-text {
-  font-size: 0.9rem;
-}
-.more-info-btn {
-  transition: background-color 0.2s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.1);
-}
-.more-info-btn:hover {
-  background-color: rgba(27, 43, 122, 0.664);
-}
-@media (min-width: 1920px) { /* For large screens to have 5 columns */
-  .xl-2 {
-    flex: 0 0 auto;
-    width: 20%;
+  .card {
+    max-width: 400px;
   }
-}
+  .title {
+    font-size: 1.1rem; 
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .v-img {
+    position: relative;
+  }
+  .v-card-text {
+    font-size: 0.9rem;
+  }
+  .more-info-btn {
+    transition: background-color 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .more-info-btn:hover {
+    background-color: rgba(27, 43, 122, 0.664);
+  }
+  @media (min-width: 1920px) { /* For large screens to have 5 columns */
+    .xl-2 {
+      flex: 0 0 auto;
+      width: 20%;
+    }
+  }
 </style>
