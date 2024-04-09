@@ -69,7 +69,7 @@ function updateSortOption(option) {
   partsStore.setSortOption(option);
 }
 
-const gpus = computed(() => partsStore.filteredAndSortedGPU);
+const gpus = computed(() => partsStore.getFilteredAndSortedData('gpu'));
 
 </script>
 
