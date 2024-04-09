@@ -1,27 +1,38 @@
 <template>
     <v-container>
-      <v-row>
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="localSearchQuery"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            @input="handleSearch"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-select
-            v-model="localSortOption"
-            :items="sortOptions"
-            label="Sort by"
-            single-line
-            hide-details
-            @change="handleSort"
-          ></v-select>
-        </v-col>
-      </v-row>
+        <v-row>
+            <v-col cols="12">
+                <v-app-bar flat dense >
+                    <v-btn icon>
+                        <v-icon>mdi-magnify</v-icon>
+                    </v-btn>
+                    <v-text-field
+                        v-model="localSearchQuery"
+                        label="Search"
+                        single-line
+                        hide-details
+                        @input="handleSearch"
+                        class="flex-grow-1"
+                    ></v-text-field>
+                    <v-menu offset-y>
+                    <template #activator="{ on, attrs }">
+                        <v-btn text v-bind="attrs" v-on="on">
+                            <v-icon>mdi-filter-menu</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item
+                            v-for="(option, index) in sortOptions"
+                            :key="index"
+                            @click="handleSort(option.value)"
+                        >
+                            <v-list-item-title>{{ option.text }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                    </v-menu>
+                </v-app-bar>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
   
@@ -30,37 +41,26 @@
 
     const props = defineProps({
         searchQuery: String,
-        sortOption: String,
-        sortOptions: Array,
         onSearch: Function,
-        onSort: Function,
     });
 
     const localSearchQuery = ref(props.searchQuery);
-    const localSortOption = ref(props.sortOption);
+    const sortOptions = [
+        { value: 'name_asc', text: 'Name (A - Z)' },
+        { value: 'name_desc', text: 'Name (Z - A)' },
+        { value: 'rank_asc', text: 'Rank (Lowest first)' },
+        { value: 'rank_desc', text: 'Rank (Highest first)' },
+    ];
 
     watch(localSearchQuery, (newQuery) => {
-        if (props.onSearch) {
-            props.onSearch(newQuery);
-        }
-    });
-
-    watch(localSortOption, (newSort) => {
-        if (props.onSort) {
-            props.onSort(newSort);
-        }
+        props.onSearch(newQuery);
     });
 
     function handleSearch() {
-        if (props.onSearch) {
-            props.onSearch(localSearchQuery.value);
-        }
+        props.onSearch(localSearchQuery.value);
     }
 
-    function handleSort() {
-        if (props.onSort) {
-            props.onSort(localSortOption.value);
-        }
+    function handleSort(optionValue) {
+        props.onSort(optionValue);
     }
 </script>
-  
