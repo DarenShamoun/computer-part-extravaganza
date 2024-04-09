@@ -35,7 +35,7 @@ export const usePartsStore = defineStore('parts', {
             }
       
             // Sort based on the sort option
-            switch (state.sortOption) {
+            switch (this.sortOption) {
               case 'name_asc':
                 filtered.sort((a, b) => a.Model.localeCompare(b.Model));
                 break;
@@ -49,7 +49,6 @@ export const usePartsStore = defineStore('parts', {
                 filtered.sort((a, b) => b.Rank - a.Rank);
                 break;
             }
-      
             return filtered;
         },
     },
@@ -76,8 +75,16 @@ export const usePartsStore = defineStore('parts', {
             case 'name_asc':
               filtered.sort((a, b) => a.Model.localeCompare(b.Model));
               break;
+            case 'name_desc':
+              filtered.sort((a, b) => b.Model.localeCompare(a.Model));
+              break;
+            case 'rank_asc':
+              filtered.sort((a, b) => a.Rank - b.Rank);
+              break;
+            case 'rank_desc':
+              filtered.sort((a, b) => b.Rank - a.Rank);
+              break;
           }
-    
           return filtered;
         },
     },
