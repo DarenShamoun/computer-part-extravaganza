@@ -29,38 +29,38 @@
     import { ref, watch } from 'vue';
 
     const props = defineProps({
-    searchQuery: String,
-    sortOption: String,
-    sortOptions: Array,
-    onSearch: Function,
-    onSort: Function,
+        searchQuery: String,
+        sortOption: String,
+        sortOptions: Array,
+        onSearch: Function,
+        onSort: Function,
     });
 
     const localSearchQuery = ref(props.searchQuery);
     const localSortOption = ref(props.sortOption);
 
     watch(localSearchQuery, (newQuery) => {
-    if (props.onSearch) {
-        props.onSearch(newQuery);
-    }
+        if (props.onSearch) {
+            props.onSearch(newQuery);
+        }
     });
 
     watch(localSortOption, (newSort) => {
-    if (props.onSort) {
-        props.onSort(newSort);
-    }
+        if (props.onSort) {
+            props.onSort(newSort);
+        }
     });
 
     function handleSearch() {
-    if (props.onSearch) {
-        props.onSearch(localSearchQuery.value);
-    }
+        if (props.onSearch) {
+            props.onSearch(localSearchQuery.value);
+        }
     }
 
     function handleSort() {
-    if (props.onSort) {
-        props.onSort(localSortOption.value);
-    }
+        if (props.onSort) {
+            props.onSort(localSortOption.value);
+        }
     }
 </script>
   
