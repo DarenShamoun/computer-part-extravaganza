@@ -29,8 +29,15 @@
   const localSearchQuery = ref('');
 
   function filterParts() {
-    const searchLower = localSearchQuery.value.toLowerCase();
-    const filtered = props.parts.filter(part => part.Model.toLowerCase().includes(searchLower));
+    const searchWords = localSearchQuery.value.toLowerCase().split(/\s+/).filter(Boolean); // Split input into words and filter out empty strings
+
+    const filtered = props.parts.filter(part => {
+        const partNameWords = `${part.Brand.toLowerCase()} ${part.Model.toLowerCase()}`.split(/\s+/); // Split combined name into words
+        // Check if every word in the search input matches at least one word in the part name
+        return searchWords.every(searchWord => 
+        partNameWords.some(partNameWord => partNameWord.includes(searchWord))
+        );
+    });
     emit('update:parts', filtered);
   }
 </script>
