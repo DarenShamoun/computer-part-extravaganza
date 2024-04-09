@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <search-and-sort-bar
+      :searchQuery="searchQuery"
+      :sortOption="sortOption"
+      :sortOptions="sortOptions"
+      :onSearch="updateSearchQuery"
+      :onSort="updateSortOption"
+    />
     <v-row class="pa-4">
       <v-col
         cols="12"
@@ -40,11 +47,30 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { usePartsStore } from '../store/partsStore';
+  import { ref, computed } from 'vue';
+  import { usePartsStore } from '../store/partsStore';
+  import SearchAndSortBar from './SearchAndSortBar.vue';
 
-const partsStore = usePartsStore();
-const gpus = computed(() => partsStore.gpu);
+  const partsStore = usePartsStore();
+  const searchQuery = ref('');
+  const sortOption = ref('');
+  const sortOptions = [
+    { value: 'name_asc', text: 'Name (A - Z)' },
+    { value: 'name_desc', text: 'Name (Z - A)' },
+    { value: 'rank_asc', text: 'Rank (Lowest first)' },
+    { value: 'rank_desc', text: 'Rank (Highest first)' },
+  ];
+
+function updateSearchQuery(query) {
+  partsStore.setSearchQuery(query);
+}
+
+function updateSortOption(option) {
+  partsStore.setSortOption(option);
+}
+
+const gpus = computed(() => partsStore.filteredAndSortedGPU);
+
 </script>
 
 <style scoped>
