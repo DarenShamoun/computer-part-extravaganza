@@ -1,20 +1,18 @@
 <template>
   <v-container>
     <search-and-sort-bar
-      :searchQuery="searchQuery"
-      :sortOption="sortOption"
+      :parts="gpuData"
       :sortOptions="sortOptions"
-      :onSearch="updateSearchQuery"
-      :onSort="updateSortOption"
+      @update:parts="handleUpdatedParts"
     />
     <v-row class="pa-4">
       <v-col
         cols="12"
         sm="6"
         md="4"
-        lg="3"
+        lg="3" 
         xl="2"
-        v-for="gpu in gpus"
+        v-for="gpu in displayedGpus"
         :key="gpu.Model"
       >
         <v-card class="mx-auto card" hover elevation="12">
@@ -48,12 +46,12 @@
 
 <script setup>
   import { ref, computed } from 'vue';
-  import { usePartsStore } from '../store/partsStore';
   import SearchAndSortBar from './SearchAndSortBar.vue';
+  import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
-  const searchQuery = ref('');
-  const sortOption = ref('');
+  const gpuData = computed(() => partsStore.getPartsByCategory('gpu'));
+
   const sortOptions = [
     { value: 'name_asc', text: 'Name (A - Z)' },
     { value: 'name_desc', text: 'Name (Z - A)' },
@@ -61,44 +59,39 @@
     { value: 'rank_desc', text: 'Rank (Highest first)' },
   ];
 
-function updateSearchQuery(query) {
-  partsStore.setSearchQuery(query);
-}
+  const displayedGpus = ref([]);
 
-function updateSortOption(option) {
-  partsStore.setSortOption(option);
-}
-
-const gpus = computed(() => partsStore.getFilteredAndSortedData('gpu'));
-
+  function handleUpdatedParts(newParts) {
+    displayedGpus.value = newParts;
+  }
 </script>
 
 <style scoped>
-.card {
-  max-width: 400px;
-}
-.title {
-  font-size: 1.1rem; 
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-.v-img {
-  position: relative;
-}
-.v-card-text {
-  font-size: 0.9rem;
-}
-.more-info-btn {
-  transition: background-color 0.2s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.1);
-}
-.more-info-btn:hover {
-  background-color: rgba(27, 43, 122, 0.664);
-}
-@media (min-width: 1920px) { /* For large screens to have 5 columns */
-  .xl-2 {
-    flex: 0 0 auto;
-    width: 20%;
+  .card {
+    max-width: 400px;
   }
-}
+  .title {
+    font-size: 1.1rem; 
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .v-img {
+    position: relative;
+  }
+  .v-card-text {
+    font-size: 0.9rem;
+  }
+  .more-info-btn {
+    transition: background-color 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .more-info-btn:hover {
+    background-color: rgba(27, 43, 122, 0.664);
+  }
+  @media (min-width: 1920px) {
+    .xl-2 {
+      flex: 0 0 auto;
+      width: 20%;
+    }
+  }
 </style>
