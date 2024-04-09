@@ -4,7 +4,7 @@
   
   const partsStore = usePartsStore();
   
-  // Computed property to extract the top-rated part from each category
+  // extract the top-rated part from each category
   const topParts = computed(() => {
     return [
       { category: 'cpu', item: partsStore.cpu[0] },
@@ -14,13 +14,13 @@
       { category: 'hdd', item: partsStore.hdd[0] },
       { category: 'usb', item: partsStore.usb[0] },
     ].map(part => ({
-    ...part,
-    item: {
-      ...part.item,
-      imageUrl: part.item.imageUrl || 'https://via.placeholder.com/500x300?text=' + part.category.toUpperCase(),
-    }
-  }));
-});
+      ...part,
+      item: {
+        ...part.item,
+        imageUrl: part.item.imageUrl || 'https://via.placeholder.com/500x300?text=' + part.category.toUpperCase(),
+      }
+    }));
+  });
 </script>
 
 <template>
