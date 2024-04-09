@@ -54,7 +54,7 @@
 
   // Automatically update displayedGpus when gpuData changes
   watchEffect(() => {
-    displayedGpus.value = gpuData.value; // This ensures displayedGpus is initialized and updated reactively
+    displayedGpus.value = gpuData.value;
   });
 
   function handleUpdatedParts(newParts) {

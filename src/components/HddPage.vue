@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <search-and-sort-bar
+      :parts="hddData"
+      @update:parts="handleUpdatedParts"
+    />
     <v-row class="pa-4">
       <v-col
         cols="12"
@@ -7,7 +11,7 @@
         md="4"
         lg="3"
         xl="2"
-        v-for="hdd in hdds"
+        v-for="hdd in displayedHdds"
         :key="hdd.Model"
       >
         <v-card class="mx-auto card" hover elevation="12">
@@ -40,11 +44,21 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { ref, computed, watchEffect } from 'vue';
+  import SearchAndSortBar from './SearchAndSortBar.vue';
   import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
-  const hdds = computed(() => partsStore.hdd);
+  const hddData = computed(() => partsStore.getPartsByCategory('hdd'));
+  const displayedHdds = ref([]);
+
+  watchEffect(() => {
+    displayedHdds.value = hddData.value;
+  });
+
+  function handleUpdatedParts(newParts) {
+    displayedHdds.value = newParts;
+  }
 </script>
 
 <style scoped>

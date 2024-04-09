@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <search-and-sort-bar
+      :parts="ramData"
+      @update:parts="handleUpdatedParts"
+    />
     <v-row class="pa-4">
       <v-col
         cols="12"
@@ -7,7 +11,7 @@
         md="4"
         lg="3"
         xl="2"
-        v-for="ram in rams"
+        v-for="ram in displayedRams"
         :key="ram.Model"
       >
         <v-card class="mx-auto card" hover elevation="12">
@@ -40,11 +44,21 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { ref, computed, watchEffect } from 'vue';
+  import SearchAndSortBar from './SearchAndSortBar.vue';
   import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
-  const rams = computed(() => partsStore.ram);
+  const ramData = computed(() => partsStore.getPartsByCategory('ram'));
+  const displayedRams = ref([]);
+
+  watchEffect(() => {
+    displayedRams.value = ramData.value;
+  });
+
+  function handleUpdatedParts(newParts) {
+    displayedRams.value = newParts;
+  }
 </script>
 
 <style scoped>

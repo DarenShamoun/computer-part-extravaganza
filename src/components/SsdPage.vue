@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <search-and-sort-bar
+      :parts="ssdData"
+      @update:parts="handleUpdatedParts"
+    />
     <v-row class="pa-4">
       <v-col
         cols="12"
@@ -7,7 +11,7 @@
         md="4"
         lg="3"
         xl="2"
-        v-for="ssd in ssds"
+        v-for="ssd in displayedSsds"
         :key="ssd.Model"
       >
         <v-card class="mx-auto card" hover elevation="12">
@@ -40,11 +44,22 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { ref, computed, watchEffect } from 'vue';
+  import SearchAndSortBar from './SearchAndSortBar.vue';
   import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
-  const ssds = computed(() => partsStore.ssd);
+  const ssdData = computed(() => partsStore.getPartsByCategory('ssd'));
+  const displayedSsds = ref([]);
+
+  // Automatically update displayedSsds when ssdData changes
+  watchEffect(() => {
+    displayedSsds.value = ssdData.value;
+  });
+
+  function handleUpdatedParts(newParts) {
+    displayedSsds.value = newParts;
+  }
 </script>
 
 <style scoped>
@@ -69,7 +84,7 @@
   .more-info-btn:hover {
     background-color: rgba(27, 43, 122, 0.664);
   }
-  @media (min-width: 1920px) { /* For large screens to have 5 columns */
+  @media (min-width: 1920px) {
     .xl-2 {
       flex: 0 0 auto;
       width: 20%;

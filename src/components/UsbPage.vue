@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <search-and-sort-bar
+      :parts="usbData"
+      @update:parts="handleUpdatedParts"
+    />
     <v-row class="pa-4">
       <v-col
         cols="12"
@@ -7,7 +11,7 @@
         md="4"
         lg="3"
         xl="2"
-        v-for="usb in usbs"
+        v-for="usb in displayedUsbs"
         :key="usb.Model"
       >
         <v-card class="mx-auto card" hover elevation="12">
@@ -40,11 +44,21 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { ref, computed, watchEffect } from 'vue';
+  import SearchAndSortBar from './SearchAndSortBar.vue';
   import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
-  const usbs = computed(() => partsStore.usb);
+  const usbData = computed(() => partsStore.getPartsByCategory('usb'));
+  const displayedUsbs = ref([]);
+
+  watchEffect(() => {
+    displayedUsbs.value = usbData.value;
+  });
+
+  function handleUpdatedParts(newParts) {
+    displayedUsbs.value = newParts;
+  }
 </script>
 
 <style scoped>
@@ -69,7 +83,7 @@
   .more-info-btn:hover {
     background-color: rgba(27, 43, 122, 0.664);
   }
-  @media (min-width: 1920px) { /* For large screens to have 5 columns */
+  @media (min-width: 1920px) {
     .xl-2 {
       flex: 0 0 auto;
       width: 20%;

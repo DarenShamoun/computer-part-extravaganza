@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <search-and-sort-bar
+      :parts="cpuData"
+      @update:parts="handleUpdatedParts"
+    />
     <v-row class="pa-4">
       <v-col
         cols="12"
@@ -7,7 +11,7 @@
         md="4"
         lg="3"
         xl="2"
-        v-for="cpu in cpus"
+        v-for="cpu in displayedCpus"
         :key="cpu.Model"
       >
         <v-card class="mx-auto card" hover elevation="12">
@@ -40,11 +44,22 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { ref, computed, watchEffect } from 'vue';
+  import SearchAndSortBar from './SearchAndSortBar.vue';
   import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
-  const cpus = computed(() => partsStore.cpu);
+  const cpuData = computed(() => partsStore.getPartsByCategory('cpu'));
+  const displayedCpus = ref([]);
+
+  // Automatically update displayedCpus when cpuData changes
+  watchEffect(() => {
+    displayedCpus.value = cpuData.value;
+  });
+
+  function handleUpdatedParts(newParts) {
+    displayedCpus.value = newParts;
+  }
 </script>
 
 <style scoped>
