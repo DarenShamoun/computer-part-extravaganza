@@ -2,7 +2,6 @@
   <v-container>
     <search-and-sort-bar
       :parts="gpuData"
-      :sortOptions="sortOptions"
       @update:parts="handleUpdatedParts"
     />
     <v-row class="pa-4">
@@ -45,21 +44,18 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue';
+  import { ref, computed, watchEffect } from 'vue';
   import SearchAndSortBar from './SearchAndSortBar.vue';
   import { usePartsStore } from '../store/partsStore';
 
   const partsStore = usePartsStore();
   const gpuData = computed(() => partsStore.getPartsByCategory('gpu'));
-
-  const sortOptions = [
-    { value: 'name_asc', text: 'Name (A - Z)' },
-    { value: 'name_desc', text: 'Name (Z - A)' },
-    { value: 'rank_asc', text: 'Rank (Lowest first)' },
-    { value: 'rank_desc', text: 'Rank (Highest first)' },
-  ];
-
   const displayedGpus = ref([]);
+
+  // Automatically update displayedGpus when gpuData changes
+  watchEffect(() => {
+    displayedGpus.value = gpuData.value; // This ensures displayedGpus is initialized and updated reactively
+  });
 
   function handleUpdatedParts(newParts) {
     displayedGpus.value = newParts;
