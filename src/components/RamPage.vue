@@ -17,7 +17,7 @@
         <v-card class="mx-auto card" hover elevation="12">
           <v-img
             class="white--text"
-            :src="'https://via.placeholder.com/500x300?text=RAM'"
+            :src="ram.imageUrl || 'https://via.placeholder.com/500x300?text=RAM'"
             height="200px"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.7)"
           >
