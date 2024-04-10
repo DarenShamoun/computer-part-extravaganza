@@ -17,7 +17,7 @@
       ...part,
       item: {
         ...part.item,
-        imageUrl: part.item.imageUrl || 'https://via.placeholder.com/500x300?text=' + part.category.toUpperCase(),
+        imageUrl: /*part.item.imageUrl ||*/ 'https://via.placeholder.com/500x300?text=' + part.category.toUpperCase(),
       }
     }));
   });
