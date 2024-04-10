@@ -17,7 +17,7 @@
         <v-card class="mx-auto card" hover elevation="12">
           <v-img
             class="white--text"
-            :src="gpu.imageUrl || 'https://via.placeholder.com/500x300?text=GPU'"
+            :src="getImageUrl(gpu.imageUrl)"
             height="200px"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.7)"
           >
@@ -59,6 +59,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedGpus.value = newParts;
+  }
+
+  function getImageUrl(imagePath) {
+    return imagePath ? import.meta.env.BASE_URL + imagePath : 'https://via.placeholder.com/500x300?text=GPU';
   }
 </script>
 
