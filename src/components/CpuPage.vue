@@ -36,6 +36,7 @@
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
             <v-btn :href="cpu.URL" target="_blank" class="more-info-btn" text>More Info</v-btn>
+            <v-btn color="red" @click="removeCpu(cpu)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -59,6 +60,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedCpus.value = newParts;
+  }
+
+  function removeCpu(cpu) {
+    displayedCpus.value = displayedCpus.value.filter((c) => c.Model !== cpu.Model);
   }
 </script>
 

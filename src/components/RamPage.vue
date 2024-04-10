@@ -36,6 +36,7 @@
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
             <v-btn :href="ram.URL" target="_blank" class="more-info-btn" text>More Info</v-btn>
+            <v-btn color="red" @click="removeRam(ram)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -58,6 +59,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedRams.value = newParts;
+  }
+
+  function removeRam(ram) {
+    displayedRams.value = displayedRams.value.filter((r) => r.Model !== ram.Model);
   }
 </script>
 

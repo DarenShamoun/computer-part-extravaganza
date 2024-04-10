@@ -36,6 +36,7 @@
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
             <v-btn :href="usb.URL" target="_blank" class="more-info-btn" text>More Info</v-btn>
+            <v-btn color="red" @click="removeUsb(usb)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -58,6 +59,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedUsbs.value = newParts;
+  }
+
+  function removeUsb(usb) {
+    displayedUsbs.value = displayedUsbs.value.filter((part) => part.Model !== usb.Model);
   }
 </script>
 

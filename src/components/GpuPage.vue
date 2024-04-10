@@ -36,6 +36,7 @@
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
             <v-btn :href="gpu.URL" target="_blank" class="more-info-btn" text>More Info</v-btn>
+            <v-btn color="red" @click="removeGpu(gpu)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -59,6 +60,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedGpus.value = newParts;
+  }
+
+  function removeGpu(selectedGpu) {
+    displayedGpus.value = displayedGpus.value.filter(gpu => gpu.Model !== selectedGpu.Model);
   }
 </script>
 

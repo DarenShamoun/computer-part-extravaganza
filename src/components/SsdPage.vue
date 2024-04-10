@@ -36,6 +36,7 @@
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
             <v-btn :href="ssd.URL" target="_blank" class="more-info-btn" text>More Info</v-btn>
+            <v-btn color="red" @click="removeSsd(ssd)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -59,6 +60,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedSsds.value = newParts;
+  }
+
+  function removeSsd(ssd) {
+    displayedSsds.value = displayedSsds.value.filter((part) => part.Model !== ssd.Model);
   }
 </script>
 

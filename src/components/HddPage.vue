@@ -36,6 +36,7 @@
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
             <v-btn :href="hdd.URL" target="_blank" class="more-info-btn" text>More Info</v-btn>
+            <v-btn color="red" @click="removeHdd(hdd)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -58,6 +59,10 @@
 
   function handleUpdatedParts(newParts) {
     displayedHdds.value = newParts;
+  }
+
+  function removeHdd(hdd) {
+    displayedHdds.value = displayedHdds.value.filter((part) => part.Model !== hdd.Model);
   }
 </script>
 
