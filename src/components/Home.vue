@@ -94,6 +94,19 @@
   .more-info-btn:hover {
     background-color: rgba(27, 43, 122, 0.664);
   }
+  .text-center {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    margin-bottom: 1rem;
+    color: #1976D2;
+  }
+  p {
+    max-width: 80%;
+    margin: auto;
+    line-height: 1.6; 
+  }
   @media (min-width: 1920px) { /* For large screens to have 5 columns */
     .xl-2 {
       flex: 0 0 auto;
