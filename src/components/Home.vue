@@ -25,6 +25,14 @@
 
 <template>
   <v-container>
+    <v-row>
+      <v-col cols="12">
+        <div class="text-center">
+          <h2>THE top of the line</h2>
+          <p>Presenting the highest-ranked PC components in the world right now, across various categories. These parts are the bleeding edge of performance and technology.</p>
+        </div>
+      </v-col>
+    </v-row>
     <v-row class="pa-4">
       <v-col
         cols="12"

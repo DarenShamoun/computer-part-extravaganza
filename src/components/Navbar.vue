@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app scroll-behavior="elevate">
     <router-link to="/" class="title-link">
-      <v-app-bar-title>Top of the Line PC Parts</v-app-bar-title>
+      <v-app-bar-title>PC Performance Extravaganza</v-app-bar-title>
     </router-link>
     <v-spacer></v-spacer>
     <router-link to="/gpu" class="nav-link">
